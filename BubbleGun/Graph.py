@@ -203,7 +203,7 @@ class Graph:
         returns a list of 3 counters, bubbles, superbubbles and insertions
         """
 
-        counter = [0, 0, 0]
+        counter = [0, 0, 0, 0]
         for chain in self.b_chains:
             for b in chain.bubbles:
                 if b.is_simple():
@@ -212,6 +212,8 @@ class Graph:
                     counter[1] += 1
                 elif b.is_insertion():
                     counter[2] += 1
+                else:
+                    counter[3] += 1
 
         return counter
 

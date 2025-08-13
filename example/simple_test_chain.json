@@ -1,0 +1,1 @@
+{"1": {"chain_id": 1, "ends": ["7", "1"], "bubbles": [{"type": "simple", "id": 1, "ends": ["7", "4"], "inside": ["6", "5"]}, {"type": "simple", "id": 2, "ends": ["4", "1"], "inside": ["3", "2"]}]}}

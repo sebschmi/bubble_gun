@@ -31,6 +31,9 @@ def find_sb_alg(graph, s, direction, only_simple=False, only_super=False):
     takes the graph and a start node s and add a bubble to the chain 
     if one is found if s was the source
     """
+
+    print(f"find_sb_alg(graph, s = {s.id}, direction = {direction}, only_simple = {only_simple}, only_super = {only_super})")
+
     # I tuples of node ids and the direction
     seen = set()
     visited = set()
@@ -42,6 +45,7 @@ def find_sb_alg(graph, s, direction, only_simple=False, only_super=False):
 
         v = S.pop()
         v = (v[0], v[1])
+        print(f"{v[0].id}-{v[1]}")
         visited.add(v[0].id)
 
         nodes_inside.append(v[0])
@@ -55,7 +59,10 @@ def find_sb_alg(graph, s, direction, only_simple=False, only_super=False):
         else:
             children = v[0].end
 
+        print(f"children: {' '.join([f"{u[0]}-{u[1]}" for u in children])}")
+
         if len(children) == 0:
+            print("found tip")
             # it's a tip
             break
 
@@ -70,6 +77,7 @@ def find_sb_alg(graph, s, direction, only_simple=False, only_super=False):
                 u_parents = [x[0] for x in graph.nodes[u[0]].end]
 
             if u[0] == s.id:
+                print("found loop")
                 # we are in a loop
                 S = set()  # so I exit the outer loop too
                 break
@@ -82,6 +90,7 @@ def find_sb_alg(graph, s, direction, only_simple=False, only_super=False):
                 seen.add((u[0], 0))
             # if all u_parents are visited then we push it into S
             if all(graph.nodes[i].id in visited for i in u_parents):
+                print(f"add child {u[0]}-{u_child_direction}")
                 S.add((graph.nodes[u[0]], u_child_direction))
 
         # checking if we finished
@@ -102,17 +111,21 @@ def find_sb_alg(graph, s, direction, only_simple=False, only_super=False):
             nodes_inside.remove(s)
             nodes_inside.remove(t[0])
             bubble = Bubble(source=s, sink=t[0], inside=nodes_inside)
+            print(f"found bubble {bubble}")
 
             if only_simple:
                 if bubble.is_simple():
+                    print("Return simple bubble")
                     return bubble
             elif only_super:
                 # If it's a bubble and it's not simple or an insertion
                 # then it's marked as super
                 if not bubble.is_simple():
                     if not bubble.is_insertion():
+                        print("Return superbubble")
                         return bubble
             else:
+                print("Return bubble")
                 return bubble
 
     return None
