@@ -238,17 +238,15 @@ def main():
         logging.info("Finding bubbles...")
 
         find_bubbles(graph, only_simple=args.only_simple, only_super=args.only_super)
-        print(f"Found {len(graph.bubbles)} bubbles")
+        print(f"Found {len(graph.bubbles)} raw bubbles")
 
         logging.info("Connecting bubbles...")
         # connecting individual bubbles into chains
         connect_bubbles(graph)
-        print(f"Connected into {len(graph.bubbles)} bubbles")
 
         # add information related to nested bubbles
         logging.info("Finding nested information...")
         find_parents(graph)
-        print(f"After find_parents {len(graph.bubbles)} bubbles")
 
         logging.info("Done finding chains...")
         b_numbers = graph.bubble_number()
